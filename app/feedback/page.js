@@ -42,7 +42,7 @@ export default function Feedback() {
       {qCount >= 1 && (
         <div style={styles.card}>
           <h3>🔇 Filler Words</h3>
-          <p>"Um", "uh" count: {fillerWords} times. Moderate — could improve with pauses.</p>
+          <p>&quot;Um&quot;, &quot;uh&quot; count: {fillerWords} times. Moderate — could improve with pauses.</p>
           <div style={styles.barChart}>
             <div style={{ ...styles.bar, width: "50%" }}></div>
           </div>
