@@ -5,16 +5,31 @@ import { useEffect, useState } from "react";
 
 export default function Feedback() {
   const [qCount, setQCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [name, setName] = useState("");
 
-  // Count how many questions were answered
+  // Run only on the client
   useEffect(() => {
+    // Get name
+    const savedName = localStorage.getItem("userName") || "there";
+    setName(savedName);
+
+    // Count completed questions
     const count = Array.from({ length: 5 }, (_, i) => i + 1)
       .map(n => localStorage.getItem(`q${n}_video`))
       .filter(Boolean).length;
+
     setQCount(count);
+    setLoading(false); // Stop loading
   }, []);
 
-  const name = localStorage.getItem("userName") || "there";
+  if (loading) {
+    return (
+      <div style={styles.loading}>
+        <p>Loading your feedback...</p>
+      </div>
+    );
+  }
 
   // Mock metrics based on completion
   const readinessScore = qCount === 5 ? 78 : qCount >= 3 ? 65 : 50;
@@ -119,8 +134,13 @@ export default function Feedback() {
   );
 }
 
-// ✅ Styles
+// ✅ Styles (unchanged)
 const styles = {
+  loading: {
+    padding: "40px",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif",
+  },
   container: {
     padding: "40px",
     fontFamily: "Arial, sans-serif",
