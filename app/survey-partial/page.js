@@ -7,9 +7,7 @@ export default function SurveyPartial() {
   const [rating, setRating] = useState(0);
 
   const handleSubmit = () => {
-    // Save rating
     localStorage.setItem("partialRating", rating);
-    // Go to feedback
     window.location.href = "/feedback";
   };
 
@@ -36,8 +34,8 @@ export default function SurveyPartial() {
       </div>
 
       <button
-        disabled={rating === 0}
-        style={rating === 0 ? styles.buttonDisabled : styles.buttonCta}
+        disabled={!rating}
+        style={!rating ? styles.buttonDisabled : styles.buttonCta}
         onClick={handleSubmit}
       >
         See My Results
