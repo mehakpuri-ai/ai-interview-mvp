@@ -31,7 +31,7 @@ export default function Feedback() {
       {qCount >= 1 && (
         <div style={styles.card}>
           <h3>🗣️ Speaking Pace</h3>
-          <p>You spoke at ~{speakingPace} (ideal: 120–160 wpm).</p>
+          <p>You spoke at ~{speakingPace} (ideal: 120&ndash;160 wpm).</p>
           <div style={styles.barChart}>
             <div style={{ ...styles.bar, width: "70%" }}></div>
           </div>
@@ -42,7 +42,7 @@ export default function Feedback() {
       {qCount >= 1 && (
         <div style={styles.card}>
           <h3>🔇 Filler Words</h3>
-          <p>&quot;Um&quot;, &quot;uh&quot; count: {fillerWords} times. Moderate — could improve with pauses.</p>
+          <p>{"\"Um\", \"uh\""} count: {fillerWords} times. Moderate — could improve with pauses.</p>
           <div style={styles.barChart}>
             <div style={{ ...styles.bar, width: "50%" }}></div>
           </div>
