@@ -8,30 +8,22 @@ export default function Feedback() {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
 
-  // Run only on the client
   useEffect(() => {
-    // Get name
+    // Get user name
     const savedName = localStorage.getItem("userName") || "there";
     setName(savedName);
 
-    // Count completed questions
-    const count = Array.from({ length: 5 }, (_, i) => i + 1)
-      .map(n => localStorage.getItem(`q${n}_video`))
-      .filter(Boolean).length;
-
+    // Count how many videos were recorded
+    const count = [1, 2, 3, 4, 5].map(n => localStorage.getItem(`q${n}_video`)).filter(Boolean).length;
     setQCount(count);
-    setLoading(false); // Stop loading
+
+    setLoading(false);
   }, []);
 
   if (loading) {
-    return (
-      <div style={styles.loading}>
-        <p>Loading your feedback...</p>
-      </div>
-    );
+    return <p style={{ textAlign: "center", marginTop: "40px" }}>Loading feedback...</p>;
   }
 
-  // Mock metrics based on completion
   const readinessScore = qCount === 5 ? 78 : qCount >= 3 ? 65 : 50;
   const confidenceTrend = qCount >= 3 ? "improved 40%" : "moderate";
   const fillerWords = qCount >= 1 ? 8 : "n/a";
@@ -42,18 +34,16 @@ export default function Feedback() {
       <h1>Great job, {name}!</h1>
       <p>Here’s your AI-powered feedback report.</p>
 
-      {/* Speaking Pace */}
       {qCount >= 1 && (
         <div style={styles.card}>
           <h3>🗣️ Speaking Pace</h3>
-          <p>You spoke at ~{speakingPace} (ideal: 120&ndash;160 wpm).</p>
+          <p>You spoke at ~{speakingPace} (ideal: 120–160 wpm).</p>
           <div style={styles.barChart}>
             <div style={{ ...styles.bar, width: "70%" }}></div>
           </div>
         </div>
       )}
 
-      {/* Filler Words */}
       {qCount >= 1 && (
         <div style={styles.card}>
           <h3>🔇 Filler Words</h3>
@@ -64,26 +54,19 @@ export default function Feedback() {
         </div>
       )}
 
-      {/* Confidence Trend */}
       {qCount >= 3 && (
         <div style={styles.card}>
           <h3>📈 Confidence Trend</h3>
           <p>Your confidence {confidenceTrend} from Q1 to Q3.</p>
           <div style={styles.trendChart}>
             <svg width="100%" height="60" style={{ marginTop: "10px" }}>
-              <polyline
-                fill="none"
-                stroke="#0066cc"
-                strokeWidth="3"
-                points="0,50 25,30 50,40 75,20 100,10"
-              />
+              <polyline fill="none" stroke="#0066cc" strokeWidth="3" points="0,50 25,30 50,40 75,20 100,10" />
               <circle cx="100" cy="10" r="4" fill="#0066cc" />
             </svg>
           </div>
         </div>
       )}
 
-      {/* PM Readiness Score */}
       {qCount === 5 && (
         <div style={styles.card}>
           <h3>🎯 PM Readiness Score: {readinessScore}/100</h3>
@@ -96,7 +79,6 @@ export default function Feedback() {
         </div>
       )}
 
-      {/* Unlock Teasers */}
       {qCount <= 2 && (
         <div style={styles.locked}>
           <p>🔒 Complete 2 more questions for PM skills analysis + readiness score</p>
@@ -110,22 +92,16 @@ export default function Feedback() {
 
       <hr style={styles.divider} />
 
-      {/* Email Capture */}
       <div style={styles.emailSection}>
         <h3>Want your complete AI profile?</h3>
         <p>Get visual insights, improvement roadmap, and benchmarks by email.</p>
-        <input
-          type="email"
-          placeholder="your@email.com"
-          style={styles.emailInput}
-        />
+        <input type="email" placeholder="your@email.com" style={styles.emailInput} />
         <button style={styles.emailBtn}>Get Full Report</button>
         <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>
           Join 500+ PMs improving their interview skills
         </p>
       </div>
 
-      {/* Actions */}
       <div style={styles.actions}>
         <button style={styles.secondary}>Try More Questions</button>
         <button style={styles.share}>Share This Tool</button>
@@ -134,13 +110,7 @@ export default function Feedback() {
   );
 }
 
-// ✅ Styles (unchanged)
 const styles = {
-  loading: {
-    padding: "40px",
-    textAlign: "center",
-    fontFamily: "Arial, sans-serif",
-  },
   container: {
     padding: "40px",
     fontFamily: "Arial, sans-serif",
